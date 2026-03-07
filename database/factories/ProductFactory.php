@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class CategoryFactory extends Factory
+class ProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,8 +16,10 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
-            'product_id' => \App\Models\Product::factory(),
+            'name' => fake()->words(2, true),
+            'qty' => fake()->numberBetween(1, 100),
+            'price' => fake()->randomFloat(2, 1000, 100000),
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }
