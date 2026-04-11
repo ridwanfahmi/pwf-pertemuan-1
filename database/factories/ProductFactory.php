@@ -17,7 +17,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->words(2, true),
-            'qty' => fake()->numberBetween(1, 100),
+            'quantity' => fake()->numberBetween(1, 100),
             'price' => fake()->randomFloat(2, 1000, 100000),
             'user_id' => \App\Models\User::factory(),
         ];

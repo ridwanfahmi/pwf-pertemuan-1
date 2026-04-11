@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ayo Belajar',
             'email' => 'belajar@example.com',
             'password' => bcrypt('password'),
+            'role' => 'admin',
         ]);
 
         // Buat 20 produk untuk user tersebut
