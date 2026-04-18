@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -22,20 +24,16 @@ class ProductController extends Controller
                   ->header('Content-Type', 'text/plain');
     }
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        if (auth()->check() && auth()->user()->role !== 'admin') {
-            $request->merge(['user_id' => auth()->id()]);
+        $data = $request->validated();
+        
+        // If user_id is not provided (non-admin), set it to the current user's ID
+        if (!isset($data['user_id'])) {
+            $data['user_id'] = auth()->id();
         }
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $product = Product::create($validated);
+        Product::create($data);
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
@@ -54,23 +52,12 @@ class ProductController extends Controller
         return view('product.view', compact('product'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
         abort_if(auth()->user()->cannot('update', $product), 403);
 
-        if (auth()->check() && auth()->user()->role !== 'admin') {
-            $request->merge(['user_id' => auth()->id()]);
-        }
-
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'quantity' => 'sometimes|integer',
-            'price' => 'sometimes|numeric',
-            'user_id' => 'sometimes|exists:users,id',
-        ]);
-
-        $product->update($validated);
+        $product->update($request->validated());
 
         return redirect()->route('product.index')->with('success', 'Product updated successfully.');
     }
