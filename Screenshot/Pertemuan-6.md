@@ -30,8 +30,7 @@ Sistem akan memberikan peringatan jika pengguna memasukkan data yang tidak sesua
 
 ---
 
-## 3. Penanganan `user_id` dan Notifikasi Sukses
-Sistem telah diperbaiki untuk menangani field `user_id` secara otomatis. Jika pengguna yang menambah produk bukan admin, maka `user_id` akan otomatis diisi dengan ID pengguna yang sedang login.
+## 3. Notifikasi Sukses
 
 Setelah data berhasil divalidasi dan disimpan, sistem akan menampilkan notifikasi sukses.
 
