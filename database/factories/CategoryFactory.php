@@ -15,17 +15,18 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement([
+            'name' => fake()->unique()->randomElement([
                 'Elektronik',
                 'Fashion',
                 'Makanan & Minuman',
                 'Kesehatan',
                 'Otomotif',
                 'Perabotan',
-                'Olahraga'
+                'Olahraga',
+                'Hobi',
+                'Kecantikan',
+                'Buku'
             ]),
-            'product_id' => Product::all()->random()->id,
-            
         ];
     }
 }

@@ -21,9 +21,10 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'quantity' => 'required|integer',
+            'quantity' => 'required|string',
             'price' => 'required|numeric',
             'user_id' => auth()->user()->role === 'admin' ? 'required|exists:users,id' : 'nullable',
+            'category_id' => 'required|exists:category,id',
         ];
     }
 
@@ -44,6 +45,8 @@ class UpdateProductRequest extends FormRequest
 
             'user_id.required' => 'Pemilik produk wajib dipilih.',
             'user_id.exists' => 'User yang dipilih tidak valid.',
+            'category_id.required' => 'Kategori produk wajib dipilih.',
+            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
         ];
     }
 }

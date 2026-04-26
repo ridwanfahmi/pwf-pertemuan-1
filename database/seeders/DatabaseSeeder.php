@@ -24,12 +24,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        // Buat 20 produk untuk user tersebut
+        // Buat 5 kategori
+        $categories = Category::factory(5)->create();
+
+        // Buat 20 produk untuk user tersebut dengan kategori acak
         Product::factory(20)->create([
             'user_id' => $user->id,
+            'category_id' => $categories->random()->id,
         ]);
-
-        // Buat 10 kategori secara acak dari produk yang ada
-        Category::factory(10)->create();
     }
 }

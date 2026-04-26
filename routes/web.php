@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware('can:manage-category')->group(function () {
+        Route::resource('category', CategoryController::class);
+    });
+
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
     Route::get('/product/export', [ProductController::class, 'export'])->name('product.export')->middleware('can:export-product');
     Route::post('/product', [ProductController::class, 'store'])->name('product.store');

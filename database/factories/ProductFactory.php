@@ -20,6 +20,7 @@ class ProductFactory extends Factory
             'quantity' => fake()->numberBetween(1, 100),
             'price' => fake()->randomFloat(2, 1000, 100000),
             'user_id' => \App\Models\User::factory(),
+            'category_id' => \App\Models\Category::factory(),
         ];
     }
 }
